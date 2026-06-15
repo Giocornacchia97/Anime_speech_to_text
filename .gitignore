@@ -1,0 +1,9 @@
+node_modules
+dist
+.vercel
+*.local
+*.log
+*.tsbuildinfo
+browser-*.png
+vite.config.js
+vite.config.d.ts

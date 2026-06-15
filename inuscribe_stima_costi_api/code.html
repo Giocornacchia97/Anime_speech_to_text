@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InuScribe | Stima Costi per Episodio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Sora:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #FDF5E6; /* Parchment Base */
+            color: #1b1c1c;
+        }
+        .ink-border {
+            border: 1px solid rgba(27, 28, 28, 0.1);
+        }
+        .ink-divider {
+            border-bottom: 1px solid rgba(27, 28, 28, 0.1);
+        }
+        .parchment-card {
+            background-color: #fbf9f8;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .parchment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px -5px rgba(27, 28, 28, 0.05);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#1b1c1c",
+                      "surface-container": "#efeded",
+                      "background": "#fbf9f8",
+                      "surface-container-low": "#f5f3f3",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#b30000",
+                      "secondary-container": "#e9e2d3",
+                      "on-primary-fixed-variant": "#930000",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "surface": "#fbf9f8",
+                      "secondary-fixed-dim": "#cdc6b8",
+                      "error": "#ba1a1a",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#c8c6c6",
+                      "surface-bright": "#fbf9f8",
+                      "on-primary-fixed": "#410000",
+                      "outline": "#916f6a",
+                      "on-primary-container": "#ffbeb4",
+                      "secondary-fixed": "#e9e2d3",
+                      "primary-fixed-dim": "#ffb4a8",
+                      "surface-container-high": "#e9e8e7",
+                      "surface-dim": "#dbdad9",
+                      "tertiary": "#404040",
+                      "secondary": "#635e53",
+                      "inverse-primary": "#ffb4a8",
+                      "surface-container-highest": "#e4e2e2",
+                      "inverse-surface": "#303031",
+                      "on-secondary-fixed-variant": "#4b463c",
+                      "outline-variant": "#e6bdb7",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#585757",
+                      "on-secondary-fixed": "#1e1b13",
+                      "on-tertiary-container": "#cfcdcd",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#ffdad4",
+                      "surface-tint": "#be0f07",
+                      "on-secondary-container": "#696458",
+                      "on-background": "#1b1c1c",
+                      "surface-variant": "#e4e2e2",
+                      "on-tertiary": "#ffffff",
+                      "on-surface-variant": "#5c403b",
+                      "inverse-on-surface": "#f2f0f0",
+                      "primary": "#870000",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#e4e2e1",
+                      "on-error": "#ffffff",
+                      "on-surface": "#1b1c1c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-margin": "32px",
+                      "gutter": "24px",
+                      "stack-lg": "32px",
+                      "card-padding": "24px",
+                      "base": "8px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Sora"],
+                      "display-lg": ["Sora"],
+                      "headline-lg": ["Sora"],
+                      "body-lg": ["Inter"],
+                      "caption": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Sora"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Sidebar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-stack-lg px-stack-md z-50">
+<div class="flex items-center gap-3 mb-stack-lg px-2">
+<div class="w-10 h-10 bg-primary flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary leading-none">InuScribe</h1>
+<p class="font-label-md text-[10px] uppercase tracking-widest text-secondary mt-1">Anime Transcription</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-full transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-md text-label-md">New Episode</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1">
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 mb-4">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+                Start New Project
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-secondary hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 p-container-margin max-w-[1200px]">
+<!-- Header Section -->
+<header class="mb-stack-lg">
+<div class="flex items-center gap-2 text-primary font-bold mb-2">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md uppercase tracking-tighter">Financial Analysis</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-background">Stima Costi per Episodio</h2>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl mt-4">
+                Analisi comparativa dei costi API basata su un episodio standard di 20 minuti (~3.000 parole). 
+                I prezzi sono stimati in base ai listini attuali dei provider.
+            </p>
+</header>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg">
+<!-- Premium -->
+<div class="parchment-card ink-border p-card-padding flex flex-col relative overflow-hidden">
+<div class="absolute top-0 right-0 p-3">
+<span class="bg-primary text-on-primary px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded">Precision</span>
+</div>
+<span class="material-symbols-outlined text-primary mb-4">high_quality</span>
+<h3 class="font-headline-md text-headline-md mb-2">Premium Setup</h3>
+<p class="font-caption text-caption text-secondary mb-6">Whisper + GPT-4o</p>
+<div class="mt-auto">
+<div class="text-4xl font-bold text-on-background">~$0.20</div>
+<p class="font-caption text-caption text-secondary">per episodio</p>
+</div>
+</div>
+<!-- Balanced -->
+<div class="parchment-card ink-border p-card-padding flex flex-col border-primary/20 bg-secondary-container/10">
+<span class="material-symbols-outlined text-primary mb-4">balance</span>
+<h3 class="font-headline-md text-headline-md mb-2">Balanced Setup</h3>
+<p class="font-caption text-caption text-secondary mb-6">Whisper + GPT-4o mini</p>
+<div class="mt-auto">
+<div class="text-4xl font-bold text-on-background">~$0.12</div>
+<p class="font-caption text-caption text-secondary">per episodio</p>
+</div>
+</div>
+<!-- Google -->
+<div class="parchment-card ink-border p-card-padding flex flex-col">
+<span class="material-symbols-outlined text-primary mb-4">cloud</span>
+<h3 class="font-headline-md text-headline-md mb-2">Google Ecosystem</h3>
+<p class="font-caption text-caption text-secondary mb-6">Whisper + Gemini 1.5 Flash</p>
+<div class="mt-auto">
+<div class="text-4xl font-bold text-on-background">~$0.12</div>
+<p class="font-caption text-caption text-secondary">per episodio</p>
+</div>
+</div>
+</div>
+<!-- Detailed Breakdown Table -->
+<section class="parchment-card ink-border mb-stack-lg overflow-hidden">
+<div class="p-card-padding ink-divider bg-surface-container-low flex justify-between items-center">
+<h4 class="font-headline-md text-headline-md">Breakdown Dettagliato</h4>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-on-tertiary-fixed text-surface text-[10px] font-bold rounded-full">USD ($)</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest text-secondary font-label-md text-label-md uppercase tracking-wider">
+<th class="p-card-padding border-b border-outline-variant font-semibold">Componente</th>
+<th class="p-card-padding border-b border-outline-variant font-semibold">Provider</th>
+<th class="p-card-padding border-b border-outline-variant font-semibold">Modello</th>
+<th class="p-card-padding border-b border-outline-variant font-semibold">Prezzo Unità</th>
+<th class="p-card-padding border-b border-outline-variant font-semibold text-right">Totale/Ep.</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- STT Row -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-card-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">mic</span>
+<span class="font-semibold">Transcription (STT)</span>
+</div>
+</td>
+<td class="p-card-padding">OpenAI</td>
+<td class="p-card-padding">Whisper v2</td>
+<td class="p-card-padding">$0.006 / min</td>
+<td class="p-card-padding text-right font-bold">$0.12</td>
+</tr>
+<!-- LLM Premium Row -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container-lowest/50">
+<td class="p-card-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">psychology</span>
+<span class="font-semibold">Refinement (LLM)</span>
+</div>
+</td>
+<td class="p-card-padding">OpenAI</td>
+<td class="p-card-padding italic">GPT-4o (Premium)</td>
+<td class="p-card-padding">$5.00 / 1M tkn</td>
+<td class="p-card-padding text-right font-bold">$0.08</td>
+</tr>
+<!-- LLM Balanced Row -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-card-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+<span class="font-semibold">Refinement (LLM)</span>
+</div>
+</td>
+<td class="p-card-padding">OpenAI</td>
+<td class="p-card-padding italic">GPT-4o mini</td>
+<td class="p-card-padding">$0.15 / 1M tkn</td>
+<td class="p-card-padding text-right font-bold text-secondary-fixed-dim"><$0.01</td>
+</tr>
+<!-- Gemini Row -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-card-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<span class="font-semibold">Refinement (LLM)</span>
+</div>
+</td>
+<td class="p-card-padding">Google</td>
+<td class="p-card-padding italic">Gemini 1.5 Flash</td>
+<td class="p-card-padding">Tier Gratuito</td>
+<td class="p-card-padding text-right font-bold text-secondary-fixed-dim">$0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Savings Potential Bento-ish Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Savings Chart Replacement/Visual -->
+<div class="parchment-card ink-border p-card-padding flex flex-col justify-center">
+<h4 class="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_down</span>
+                    Savings Potential
+                </h4>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md text-secondary">Premium (GPT-4o)</span>
+<span class="font-bold text-primary">$0.20</span>
+</div>
+<div class="w-full h-2 bg-outline-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-full opacity-30"></div>
+</div>
+<div class="flex justify-between items-end">
+<span class="font-label-md text-label-md text-secondary">Balanced (4o mini)</span>
+<span class="font-bold text-on-background">$0.12</span>
+</div>
+<div class="w-full h-2 bg-outline-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[60%]"></div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-primary-container/10 rounded-lg flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+<p class="font-body-md text-body-md italic text-on-surface-variant">
+                        "Spostando i carichi di lavoro su GPT-4o mini, puoi ridurre i costi operativi del <strong class="text-primary">40%</strong> per ogni stagione di anime trascritta."
+                    </p>
+</div>
+</div>
+<!-- Comparative Visual Image -->
+<div class="relative h-64 lg:h-auto overflow-hidden rounded shadow-sm">
+<img alt="Financial Dashboard Visual" class="w-full h-full object-cover" data-alt="A clean, minimalist high-angle shot of a classic wooden desk holding a sleek silver laptop and a pair of traditional black-rimmed glasses. The scene is bright and airy with soft parchment tones and a single deep red notebook in the corner. The aesthetic is academic and professional, blending old-world calligraphy vibes with modern digital efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5WgS-MycW7WeNsWjtuYb1eIJfGTG2fLlBxk9P24_gEAQaNqukauz065T9SN4W_MxOg3ar-NGikGuwHzVqPCyltQUxIOS6KPSnGjTGdqypnk7lsZFWPyC9xIKkAhjSo0LajlonU_Vz4nIouaMIX66em07SUKzO6yPAVtkXMrGyZvVz5sCdlKYqaUQhUkJrDVwWWEcqL9oP15M_ppKJ14kg5NHRrmlpcbVj0TTVZdi87Tad0UjOKxs83dBmFIvbzRdTqkM7jaUqcQrD"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+<div class="absolute bottom-0 left-0 p-card-padding bg-white/90 backdrop-blur-sm m-4 ink-border">
+<p class="font-headline-md text-primary font-bold">40% Risparmio</p>
+<p class="font-caption text-secondary">Utilizzando modelli ultra-veloci</p>
+</div>
+</div>
+</div>
+<!-- Progress Footer -->
+<footer class="mt-stack-lg p-card-padding bg-surface-container-highest flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-4 border-primary/20 flex items-center justify-center relative">
+<svg class="absolute inset-0 transform -rotate-90">
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="31.4" stroke-width="4"></circle>
+</svg>
+<span class="text-[10px] font-bold">75%</span>
+</div>
+<div>
+<h5 class="font-label-md text-label-md uppercase">Budget Stagionale</h5>
+<p class="font-caption text-secondary">$84.20 spesi su $120.00</p>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 border border-on-background font-label-md text-label-md hover:bg-surface-container transition-colors">Esporta Report</button>
+<button class="px-6 py-2 bg-primary text-on-primary font-label-md text-label-md hover:opacity-90 transition-opacity">Configura API</button>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interactions for summary cards
+        document.querySelectorAll('.parchment-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(1.1) rotate(5deg)';
+                    icon.style.transition = 'transform 0.3s ease';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body></html>

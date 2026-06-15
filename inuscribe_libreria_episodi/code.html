@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InuScribe - Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fbf9f8; /* Parchment-inspired surface */
+        }
+        .ink-border {
+            border: 1px solid rgba(27, 28, 28, 0.1);
+        }
+        .ink-divider {
+            border-bottom: 1px solid rgba(27, 28, 28, 0.1);
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#916f6a",
+                      "on-secondary-fixed-variant": "#4b463c",
+                      "tertiary-fixed-dim": "#c8c6c6",
+                      "on-secondary-container": "#696458",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#410000",
+                      "inverse-primary": "#ffb4a8",
+                      "secondary-fixed": "#e9e2d3",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e4e2e2",
+                      "surface-bright": "#fbf9f8",
+                      "secondary-container": "#e9e2d3",
+                      "primary-fixed": "#ffdad4",
+                      "primary": "#870000",
+                      "surface-container-high": "#e9e8e7",
+                      "on-tertiary-fixed": "#1b1c1c",
+                      "surface-container": "#efeded",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "tertiary": "#404040",
+                      "on-secondary-fixed": "#1e1b13",
+                      "on-background": "#1b1c1c",
+                      "surface-variant": "#e4e2e2",
+                      "surface-container-low": "#f5f3f3",
+                      "primary-fixed-dim": "#ffb4a8",
+                      "background": "#fbf9f8",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#b30000",
+                      "on-primary-container": "#ffbeb4",
+                      "outline-variant": "#e6bdb7",
+                      "inverse-surface": "#303031",
+                      "secondary-fixed-dim": "#cdc6b8",
+                      "on-primary-fixed-variant": "#930000",
+                      "surface": "#fbf9f8",
+                      "on-tertiary-container": "#cfcdcd",
+                      "tertiary-fixed": "#e4e2e1",
+                      "surface-dim": "#dbdad9",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#1b1c1c",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "tertiary-container": "#585757",
+                      "surface-tint": "#be0f07",
+                      "secondary": "#635e53",
+                      "on-surface-variant": "#5c403b",
+                      "inverse-on-surface": "#f2f0f0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-margin": "32px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "card-padding": "24px",
+                      "stack-sm": "8px",
+                      "gutter": "24px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "headline-md": ["Sora"],
+                      "headline-lg-mobile": ["Sora"],
+                      "body-md": ["Inter"],
+                      "display-lg": ["Sora"],
+                      "headline-lg": ["Sora"],
+                      "caption": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Sidebar (Desktop) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-stack-lg px-stack-md z-40 hidden md:flex">
+<div class="mb-stack-lg">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">InuScribe</h1>
+<p class="font-label-md text-caption text-secondary">Anime Transcription</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-md text-label-md">New Episode</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-full transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-secondary hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2">
+<a class="flex items-center gap-3 px-4 py-2 text-secondary hover:bg-surface-container-highest transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-secondary hover:bg-surface-container-highest transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Top Bar -->
+<header class="flex justify-between items-center px-container-margin w-full h-16 sticky top-0 z-30 bg-surface border-b border-outline-variant md:pl-72">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary">search</span>
+<input class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-full pl-10 pr-4 py-2 text-body-md font-body-md" placeholder="Cerca episodi..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-container overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBk1hsW4NflT8ACC0w9hfu7lR1LjkhY2LicA1vPokPmC-BOL2_qy_wfVpvgGipbTyeFoJMFvTF-22QArajxisj_aSioA38sl6tLpyRun9Wt8rd5gNkTtEcG7Z55pwG5IIdgNX0CHWfHZiNRceYPzbbb796DsyzV7dqIlkq-ISiIIX6H8GF2uCfy5s-lCxpT6lV6rcuI4A5nZXHhPfa50lQjtfUFzx9F5QexKxiMGDGHIjIQL81R_js9NQWU0GMkXjHGiphb7jBCHu6l"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="md:ml-64 p-container-margin min-h-screen">
+<!-- Header & Filters Section -->
+<div class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-gutter">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">La tua Libreria</h2>
+<p class="text-body-md text-secondary">Gestisci i tuoi episodi trascritti e monitora i tuoi progressi linguistici.</p>
+</div>
+<div class="flex flex-wrap gap-stack-sm">
+<div class="flex flex-col gap-1">
+<span class="text-caption font-label-md text-secondary uppercase tracking-wider">Livello JLPT</span>
+<select class="bg-surface ink-border rounded-lg text-label-md px-3 py-2 focus:border-primary focus:ring-0">
+<option>Tutti i livelli</option>
+<option>N5 - Principiante</option>
+<option>N4 - Elementare</option>
+<option>N3 - Intermedio</option>
+<option>N2 - Avanzato</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-caption font-label-md text-secondary uppercase tracking-wider">Personaggi</span>
+<select class="bg-surface ink-border rounded-lg text-label-md px-3 py-2 focus:border-primary focus:ring-0">
+<option>Tutti</option>
+<option>Inuyasha</option>
+<option>Kagome</option>
+<option>Sesshomaru</option>
+<option>Miroku</option>
+</select>
+</div>
+<button class="self-end bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                    Filtra
+                </button>
+</div>
+</div>
+<!-- Episodes Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
+<!-- Episode Card 1 (Completed) -->
+<div class="bg-surface ink-border hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A cinematic close-up of a traditional Japanese forest at dusk, with soft ethereal lighting filtering through ancient cedar trees. The atmosphere is mystical and serene, reflecting a classic anime aesthetic with deep charcoal shadows and hints of crimson red in the foliage. High-quality digital rendering with a clean, academic focus on detail and texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXk1_EU4n2TnmpHYOOpU9rARRgCXw_4IMBTsPsnyRciKEOQRVszf_AyvNASUdY7kwfhm_6ydHduTcb-y_kdJ5xSkYpUEzIeRJjqHxh46XnULvKeOYoAw4UkIE_f5_fjaA7toaF-wicreWfVcYcEEEeleOLMl42GNIOuwKCG3LVA4nUAB0O0ZA6onTqm-ceFOWcpc9YiXci7mFV35QmlWmwgiFUMcc_dYdPorel5zC7Eo6G8Hyx4haPlSSVhOd7ZMtx_JsZNkpYW3hC"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary text-on-primary text-caption font-label-md px-2 py-1 rounded">N4</span>
+<span class="bg-inverse-surface text-inverse-on-surface text-caption font-label-md px-2 py-1 rounded">Kanji High</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-surface-container">
+<div class="h-full bg-primary" style="width: 100%"></div>
+</div>
+</div>
+<div class="p-card-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-body-lg font-bold leading-tight">Episodio 1: La ragazza che squarcia il tempo</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-caption text-secondary mb-4 italic">Elaborato il 12 Ottobre 2023</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-high px-2 py-1 text-caption font-label-md rounded border border-outline-variant">Kagome</span>
+<span class="bg-surface-container-high px-2 py-1 text-caption font-label-md rounded border border-outline-variant">Inuyasha</span>
+</div>
+<div class="mt-auto pt-4 ink-divider flex justify-between items-center">
+<span class="text-caption font-label-md text-primary font-bold uppercase">Completato</span>
+<button class="text-primary hover:underline font-label-md flex items-center gap-1">
+                            Studia <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Episode Card 2 (In Processing) -->
+<div class="bg-surface ink-border hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
+<div class="relative h-48 overflow-hidden bg-surface-container flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-50 grayscale transition-transform duration-500 group-hover:scale-105" data-alt="An artistic illustration of a traditional Japanese shrine gate under a full moon. The scene is rendered in an ink-on-parchment style, with delicate brushwork and high contrast. Deep red accents highlight the architectural details against a soft cream background, creating a focused, academic atmosphere suitable for language study. The mood is calm and contemplative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARwnUBelnKkIb9mmhNLYNZ4zVBXMRUbl-XBy6nvpndeBpHOWB04U7OGuABbaVacVm7H5wlYG3GUzfiV17KYlIWbjj3ZMy5asiinavZ-TePkwuPEg6uvzrnZMqnK2ZW-dOw-deIWMufN-FlSjmHpWh2O2JjvzSbFjMMIOTNXxmviAL_mQGaiCh_ccjpBXNKLwGuF8H6hp2Z-GczSsbtuCKPNTzTJErfJjBCXGIslVGzovh33FBr_8s4yLJ7zkwksNSW0H9lgxHjFWyq"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-on-surface">
+<div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-2"></div>
+<span class="font-label-md text-caption uppercase tracking-widest">Trascrizione in corso...</span>
+</div>
+</div>
+<div class="p-card-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-body-lg font-bold leading-tight">Episodio 2: I predatori della sfera</h3>
+<span class="material-symbols-outlined text-secondary animate-pulse">hourglass_empty</span>
+</div>
+<p class="text-caption text-secondary mb-4 italic">Caricato oggi, 14:30</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-high px-2 py-1 text-caption font-label-md rounded border border-outline-variant">Lady Kaede</span>
+</div>
+<div class="mt-auto pt-4 ink-divider flex justify-between items-center">
+<span class="text-caption font-label-md text-secondary font-bold uppercase">In elaborazione</span>
+<span class="text-caption text-secondary">65%</span>
+</div>
+</div>
+</div>
+<!-- Episode Card 3 (Completed) -->
+<div class="bg-surface ink-border hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A macro photograph of an open Japanese-English dictionary with handwritten kanji characters on aged, parchment-style paper. The lighting is focused and warm, emphasizing the texture of the paper and the sharp black ink. Minimalist and scholarly, the image features deep red highlights on key vocab items, maintaining a serious yet engaging aesthetic for advanced learners." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfLylcOjdpKlmbahB4FTQoB_oYFGyXbIlRTEqzHwrHKhyrggJ6-WufEIUHH2VLNDooexZPIYC22C9KZV3T1hnP5Q9nuHNDiDqMFkbDZKpxADuKMoBBAX3Fr3lyOyQBYkSQ6kyI6j2dXvS-fejsPHRpoPB8tKXUuU02IFGHo9b7PKrNBP8rqVLH_AHwNB7BxLiJTI1WhFhLW5XtAnX4ZcDMyTsR3wi2VL16zMPC4dbyGEKHQBW810PiCZtQJREPTS1RUJB9UbUcPtMu"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary text-on-primary text-caption font-label-md px-2 py-1 rounded">N3</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-surface-container">
+<div class="h-full bg-primary" style="width: 45%"></div>
+</div>
+</div>
+<div class="p-card-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-body-lg font-bold leading-tight">Episodio 3: Ritorno dal buco nero</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-caption text-secondary mb-4 italic">Elaborato il 5 Ottobre 2023</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-high px-2 py-1 text-caption font-label-md rounded border border-outline-variant">Sesshomaru</span>
+</div>
+<div class="mt-auto pt-4 ink-divider flex justify-between items-center">
+<span class="text-caption font-label-md text-primary font-bold uppercase">Completato</span>
+<button class="text-primary hover:underline font-label-md flex items-center gap-1">
+                            Continua <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Episode Card 4 (Completed) -->
+<div class="bg-surface ink-border hover:shadow-lg transition-all duration-300 flex flex-col group overflow-hidden">
+<div class="relative h-48 overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A stylized digital painting of a sunrise over Mount Fuji, rendered in a minimalist neo-classical academic style. The color palette consists of soft parchment whites, charcoal grays, and a striking sun in deep imperial red. The composition is clean and framed, suggesting a timeless Japanese landscape viewed through a modern lens, emphasizing clarity and focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPBcYLR3medr-0QxEvBTDbdZMZBwG9gQDhiZuM-lOu5TSpFLzWh-e7fdXgu7KVdZ_n28tnH0KW_tco3fpJT5_AIXZRIB08vhqlG2_3gs_ruvT9AW5mTiJMQYIMdp4R63PFsVb8Zr9hBjWQrUeQJwUA3yjpry0WMft-gMSlBmW-be5KGdUgD_TCudBxb8zTQl5Ai3vgeha_zapk7JUllHKVYhbnrgfLpynI6zOYzBlZSbyiDhQ7luAn4ub8eBD6fgj6Xe4J-2qyBm2n"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary text-on-primary text-caption font-label-md px-2 py-1 rounded">N5</span>
+</div>
+</div>
+<div class="p-card-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-body-lg font-bold leading-tight">Episodio 4: Yura, il demone dei capelli</h3>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-caption text-secondary mb-4 italic">Elaborato il 1 Ottobre 2023</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="bg-surface-container-high px-2 py-1 text-caption font-label-md rounded border border-outline-variant">Miroku</span>
+<span class="bg-surface-container-high px-2 py-1 text-caption font-label-md rounded border border-outline-variant">Sango</span>
+</div>
+<div class="mt-auto pt-4 ink-divider flex justify-between items-center">
+<span class="text-caption font-label-md text-primary font-bold uppercase">Completato</span>
+<button class="text-primary hover:underline font-label-md flex items-center gap-1">
+                            Studia <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty Slot State -->
+<button class="bg-surface-container-low border-2 border-dashed border-outline-variant hover:border-primary hover:bg-surface transition-all duration-300 flex flex-col items-center justify-center p-stack-lg min-h-[400px] group">
+<div class="w-16 h-16 rounded-full bg-surface ink-border flex items-center justify-center mb-4 group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<span class="font-headline-md text-body-lg font-bold mb-1">Aggiungi Episodio</span>
+<p class="text-caption text-secondary max-w-[200px] text-center">Carica un nuovo file video o incolla un link per iniziare la trascrizione.</p>
+</button>
+</div>
+<!-- Learning Progress Summary (Bottom Section) -->
+<div class="mt-stack-lg p-card-padding bg-surface ink-border">
+<div class="flex items-center justify-between mb-stack-md">
+<h4 class="font-label-md text-label-md uppercase tracking-widest text-secondary">Riepilogo Progressi</h4>
+<a class="text-primary font-label-md text-caption hover:underline" href="#">Vedi statistiche dettagliate</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<div class="flex flex-col">
+<span class="text-headline-md font-display-lg text-primary">12</span>
+<span class="text-caption text-secondary">Episodi Completati</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-display-lg text-on-surface">458</span>
+<span class="text-caption text-secondary">Nuovi Kanji Appresi</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-display-lg text-on-surface">1,2k</span>
+<span class="text-caption text-secondary">Vocaboli Revisionati</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-display-lg text-primary">85%</span>
+<span class="text-caption text-secondary">Accuratezza Media</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant px-container-margin h-16 flex items-center justify-between z-50">
+<button class="flex flex-col items-center gap-1 text-secondary">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-md">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="text-[10px] font-label-md">Libreria</span>
+</button>
+<div class="-mt-8 bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-lg border-4 border-surface">
+<span class="material-symbols-outlined">add</span>
+</div>
+<button class="flex flex-col items-center gap-1 text-secondary">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="text-[10px] font-label-md">Flashcard</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-secondary">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label-md">Profilo</span>
+</button>
+</nav>
+<script>
+        // Simple Micro-interaction for hover states
+        document.querySelectorAll('.ink-border').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

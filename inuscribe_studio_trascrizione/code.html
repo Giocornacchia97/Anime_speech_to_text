@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="light" lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InuScribe | Sessione di Trascrizione</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#916f6a",
+                    "on-secondary-fixed-variant": "#4b463c",
+                    "tertiary-fixed-dim": "#c8c6c6",
+                    "on-secondary-container": "#696458",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#410000",
+                    "inverse-primary": "#ffb4a8",
+                    "secondary-fixed": "#e9e2d3",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e4e2e2",
+                    "surface-bright": "#fbf9f8",
+                    "secondary-container": "#e9e2d3",
+                    "primary-fixed": "#ffdad4",
+                    "primary": "#870000",
+                    "surface-container-high": "#e9e8e7",
+                    "on-tertiary-fixed": "#1b1c1c",
+                    "surface-container": "#efeded",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary": "#404040",
+                    "on-secondary-fixed": "#1e1b13",
+                    "on-background": "#1b1c1c",
+                    "surface-variant": "#e4e2e2",
+                    "surface-container-low": "#f5f3f3",
+                    "primary-fixed-dim": "#ffb4a8",
+                    "background": "#fbf9f8",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#b30000",
+                    "on-primary-container": "#ffbeb4",
+                    "outline-variant": "#e6bdb7",
+                    "inverse-surface": "#303031",
+                    "secondary-fixed-dim": "#cdc6b8",
+                    "on-primary-fixed-variant": "#930000",
+                    "surface": "#fbf9f8",
+                    "on-tertiary-container": "#cfcdcd",
+                    "tertiary-fixed": "#e4e2e1",
+                    "surface-dim": "#dbdad9",
+                    "on-tertiary": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#585757",
+                    "surface-tint": "#be0f07",
+                    "secondary": "#635e53",
+                    "on-surface-variant": "#5c403b",
+                    "inverse-on-surface": "#f2f0f0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-margin": "32px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px",
+                    "card-padding": "24px",
+                    "stack-sm": "8px",
+                    "gutter": "24px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "headline-lg": ["Sora"],
+                    "caption": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #FDF5E6; /* Parchment level 0 */
+            color: #1b1c1c;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .waveform-bar {
+            transition: height 0.2s ease;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #870000;
+            border-radius: 2px;
+        }
+        .parchment-card {
+            background-color: #FDF5E6;
+            border: 1px solid rgba(27, 28, 28, 0.1);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex justify-between items-center px-container-margin w-full h-16 sticky top-0 z-50">
+<div class="flex items-center gap-gutter">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">InuScribe</h1>
+<nav class="hidden md:flex gap-stack-md">
+<a class="font-body-md text-body-md text-secondary dark:text-secondary-fixed-dim hover:text-primary-container transition-colors duration-200" href="#">Dashboard</a>
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Library</a>
+<a class="font-body-md text-body-md text-secondary dark:text-secondary-fixed-dim hover:text-primary-container transition-colors duration-200" href="#">Billing</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-primary text-label-md font-label-md" placeholder="Cerca trascrizioni..." type="text"/>
+</div>
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined">settings</span></button>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A clean, professional headshot of a user for a profile avatar. The lighting is soft and academic, set against a neutral, warm background that matches a minimalist parchment aesthetic. The style is modern and high-resolution, suitable for a sophisticated SaaS educational platform dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6tW9xTJNWqJsisc5ksIFBhonL5zppYLdlG6RdHcdP6Pg3gLGyMfNhyZYvSh4t_FhT2_92sA65C5g1cM3VhyNbo3ZALLi53HFEW8u0RUNJxoHFBuTi8rBRrytDBaf5gjcZZ8QXGsQ3OOWoY-pGi8MydfBnvgNF7BxR9KDUE4M2WHeFoefB3BrrZbDdjtOGHQmjdl59yofq03yabfX7vJd44O7gfekiAmrQ2Tqjte5Hr3eBqf7CMOZ6d7Q_3cC-v71jBxmU71pvFqkp"/>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- SideNavBar (Shared Component - Hidden on mobile for focus) -->
+<aside class="hidden lg:flex flex-col h-full py-stack-lg px-stack-md bg-surface-container-low dark:bg-surface-container-highest border-r border-outline-variant dark:border-outline w-64 shrink-0">
+<div class="flex items-center gap-stack-sm mb-stack-lg px-2">
+<img alt="InuScribe Logo" class="w-10 h-10 rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXbxm8UUwUON4YZZHmbzyRaWf_Fe2EIBGgsaLLenID5x8k-cLuh1boHg6e-9hmFEPZ8whod0TIiFWktdVN5NLrm8gQ5C8EEl0BYUz6aYkl6v4QAJvA62UDpWWQMRzYEwjM-YM7ckua0IOyW2bjkxdbz28BBPqWpKYiu2D1b9Mh72pi_0pPe1p2LRMl2ZZLwDgIsVqHtHeNlrgOZIP-4biNwkCc-eoSqbVDqtg00oB14J0-BiLx91YAGSYBvjE4BmgJ_uuH1NVDmCx5"/>
+<div>
+<p class="font-label-md text-label-md font-bold text-primary">InuScribe</p>
+<p class="text-caption text-secondary">Anime Transcription</p>
+</div>
+</div>
+<div class="flex flex-col gap-base">
+<button class="flex items-center gap-stack-sm p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all duration-200 rounded-full">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</button>
+<button class="flex items-center gap-stack-sm p-3 bg-primary-container text-on-primary-container font-bold rounded-full transition-all duration-200">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</button>
+<button class="flex items-center gap-stack-sm p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all duration-200 rounded-full">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-md text-label-md">New Episode</span>
+</button>
+<button class="flex items-center gap-stack-sm p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all duration-200 rounded-full">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</button>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-stack-md flex flex-col gap-base">
+<button class="flex items-center gap-stack-sm p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all duration-200 rounded-full">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</button>
+<button class="flex items-center gap-stack-sm p-3 text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container-high transition-all duration-200 rounded-full">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Sign Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Workspace -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- Session Header -->
+<div class="px-container-margin py-stack-md bg-surface flex justify-between items-center border-b border-outline-variant">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-tertiary text-on-tertiary text-caption rounded font-bold uppercase tracking-wider">Episodio 04</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Il Sussurro del Vento</h2>
+</div>
+<p class="text-caption text-secondary">Progetto: Mushishi S1 | Ultimo accesso: 2 minuti fa</p>
+</div>
+<div class="flex gap-stack-sm">
+<button class="px-4 py-2 border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Esporta PDF
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">save</span> Salva Sessione
+                    </button>
+</div>
+</div>
+<!-- Content Area: Split View -->
+<div class="flex-1 flex flex-col lg:flex-row overflow-hidden bg-background">
+<!-- Left: Audio Player & Waveform -->
+<div class="w-full lg:w-1/3 border-r border-outline-variant flex flex-col p-container-margin gap-stack-lg bg-surface-container-low">
+<div class="aspect-video parchment-card rounded-lg overflow-hidden relative group">
+<img class="w-full h-full object-cover opacity-80" data-alt="A serene cinematic still from an anime scene featuring a traditional Japanese landscape with mountains and a lush green forest. The colors are muted and academic, with deep reds and earthy tones. The atmosphere is quiet and contemplative, captured in a high-fidelity digital art style that emphasizes texture and soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_K1-pmqSaeRQTuwk8y5HxXlrrkGQSKDh-hYQSGCxaEOxGjb1l89g1vR72_KT-LYN7vFCvRb8HZRgdAWsQ0WxZAzaLaDC_3GD53dMj7tx6V43PBVT9Bu5CWbrlRyx4hpo2ZldPY6damN7xS1zAo9BagfFzWVNGpHhtLLYd_nQWYepPRwYzyUcN56UAxU6jtMXSHtYfe75Y03a2jWE0cvEcMjSBsxPsjSHLc0od4alu9m3NsJrJgVAMoCABSyGGY7sm1GqERKWOEe6"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<div class="flex flex-col gap-stack-md">
+<div class="flex items-end gap-1 h-12">
+<!-- Simple Mock Waveform -->
+<div class="waveform-bar w-1 bg-primary/20 h-4 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-6 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-8 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/40 h-10 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-12 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-8 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-6 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/60 h-9 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-11 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-12 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-5 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-7 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-9 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/10 h-4 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/10 h-3 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/10 h-4 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/10 h-6 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/10 h-2 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-5 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-8 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/20 h-10 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-12 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary h-8 rounded-full"></div>
+<div class="waveform-bar w-1 bg-primary/30 h-4 rounded-full"></div>
+</div>
+<div class="flex items-center justify-between font-label-md text-caption text-secondary">
+<span>12:45</span>
+<div class="flex-1 mx-4 h-1 bg-outline-variant relative">
+<div class="absolute left-0 top-0 h-full w-[45%] bg-primary"></div>
+<div class="absolute left-[45%] top-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-sm"></div>
+</div>
+<span>24:00</span>
+</div>
+<div class="flex justify-center items-center gap-stack-lg">
+<button class="text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined">replay_10</span></button>
+<button class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined">forward_10</span></button>
+</div>
+</div>
+<div class="flex flex-col gap-base mt-stack-md">
+<div class="p-3 parchment-card border-l-4 border-l-primary flex gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Suggerimento Studio</p>
+<p class="text-caption text-secondary">Ascolta attentamente la variazione di tono nella parola 'Kokoro' in questo segmento.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Transcription Columns & Notes -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- Top: Split Transcription Columns -->
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 divide-x divide-outline-variant overflow-hidden">
+<!-- Col 1: Originale -->
+<div class="flex flex-col overflow-hidden">
+<div class="px-stack-md py-stack-sm bg-surface-container-high border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">history_edu</span> Trascrizione Originale
+                                </h3>
+<button class="text-secondary hover:text-primary"><span class="material-symbols-outlined text-sm">settings_input_component</span></button>
+</div>
+<div class="flex-1 overflow-y-auto p-stack-md space-y-stack-md custom-scrollbar">
+<div class="p-4 parchment-card bg-primary/5 border-primary/20 rounded shadow-sm">
+<p class="text-caption text-primary font-bold mb-1">00:12:30</p>
+<p class="font-body-lg text-body-lg leading-relaxed">"Ma, sono solo storie che si raccontano i vecchi nelle sere d'inverno, non credi?"</p>
+</div>
+<div class="p-4 hover:bg-surface-container transition-colors rounded cursor-pointer group">
+<p class="text-caption text-secondary mb-1 group-hover:text-primary">00:12:35</p>
+<p class="font-body-lg text-body-lg leading-relaxed">"Non saprei. Mio nonno non era certo il tipo da inventare favole senza un motivo preciso."</p>
+</div>
+<div class="p-4 hover:bg-surface-container transition-colors rounded cursor-pointer group">
+<p class="text-caption text-secondary mb-1 group-hover:text-primary">00:12:42</p>
+<p class="font-body-lg text-body-lg leading-relaxed">"Tuttavia, il vento oggi ha un suono diverso. Sembra quasi che stia cercando di sussurrare qualcosa ai fiori di pesco."</p>
+</div>
+</div>
+</div>
+<!-- Col 2: Parafrasi -->
+<div class="flex flex-col overflow-hidden">
+<div class="px-stack-md py-stack-sm bg-surface-container-high border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">school</span> Parafrasi Didattica
+                                </h3>
+<span class="px-2 py-0.5 bg-outline text-on-primary text-[10px] rounded-full font-bold">LIVELLO N3</span>
+</div>
+<div class="flex-1 overflow-y-auto p-stack-md space-y-stack-md custom-scrollbar bg-surface/30">
+<div class="p-4 parchment-card bg-primary/5 border-primary/20 rounded shadow-sm">
+<p class="text-caption text-primary font-bold mb-1">Traduzione Semplice</p>
+<p class="font-body-lg text-body-lg leading-relaxed">"Ma queste sono solo storie vecchie. Tu pensi che siano vere?"</p>
+</div>
+<div class="p-4">
+<p class="text-caption text-secondary mb-1">Analisi Grammaticale</p>
+<p class="font-body-lg text-body-lg leading-relaxed text-on-surface-variant italic">"Non lo so. Mio nonno non diceva cose non vere per gioco."</p>
+</div>
+<div class="p-4">
+<p class="text-caption text-secondary mb-1">Struttura Frasale</p>
+<p class="font-body-lg text-body-lg leading-relaxed text-on-surface-variant italic">"Ma il vento oggi fa un rumore strano. Sembra che parli ai fiori."</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom: Note Didattiche -->
+<div class="h-1/3 bg-surface border-t border-outline-variant flex flex-col overflow-hidden shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
+<div class="px-container-margin py-stack-sm flex justify-between items-center border-b border-outline-variant bg-surface-container-lowest">
+<h3 class="font-label-md text-label-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">menu_book</span> Note Didattiche &amp; Vocabolario
+                            </h3>
+<div class="flex gap-stack-sm">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">expand_less</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+</div>
+<div class="flex-1 p-container-margin overflow-y-auto custom-scrollbar flex flex-wrap gap-gutter">
+<!-- Vocabulary Card -->
+<div class="min-w-[280px] flex-1 parchment-card p-4 rounded border-l-4 border-l-primary">
+<h4 class="font-label-md text-label-md text-on-surface border-b border-outline-variant pb-2 mb-3">Vocabolario Chiave</h4>
+<ul class="space-y-2">
+<li class="flex justify-between items-center text-body-md">
+<span class="font-bold text-primary">Sussurro</span>
+<span class="text-secondary italic">Whisper / 囁き (Sasayaki)</span>
+</li>
+<li class="flex justify-between items-center text-body-md">
+<span class="font-bold text-primary">Favole</span>
+<span class="text-secondary italic">Tales / おとぎ話 (Otogibanashi)</span>
+</li>
+<li class="flex justify-between items-center text-body-md">
+<span class="font-bold text-primary">Tuttavia</span>
+<span class="text-secondary italic">However / しかし (Shikashi)</span>
+</li>
+</ul>
+</div>
+<!-- Grammar Note Card -->
+<div class="min-w-[320px] flex-[1.5] parchment-card p-4 rounded border-l-4 border-l-tertiary">
+<h4 class="font-label-md text-label-md text-on-surface border-b border-outline-variant pb-2 mb-3">Nota Grammaticale: Il Condizionale</h4>
+<p class="text-body-md text-on-surface-variant mb-2">
+                                    Nella frase <span class="bg-primary/10 px-1 rounded font-bold">"Non saprei"</span>, il condizionale esprime un'incertezza cortese, tipica del linguaggio formale e letterario giapponese tradotto in italiano.
+                                </p>
+<div class="bg-surface-container p-2 rounded text-caption italic">
+                                    Confronto: "Non so" (Diretto) vs "Non saprei" (Dubitativo/Educato).
+                                </div>
+</div>
+<!-- Culture Card -->
+<div class="min-w-[240px] flex-1 parchment-card p-4 rounded border-l-4 border-l-secondary">
+<h4 class="font-label-md text-label-md text-on-surface border-b border-outline-variant pb-2 mb-3">Approfondimento Culturale</h4>
+<p class="text-caption text-secondary italic">
+                                    Il riferimento al "sussurro del vento" è un tropo comune nell'estetica dello Shinto animista, dove gli elementi naturali possiedono una voce propria (kami).
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Shared Component Logic - Active session hide unless specifically needed) -->
+<div class="fixed bottom-container-margin right-container-margin flex flex-col gap-stack-sm items-end">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform group">
+<span class="material-symbols-outlined text-3xl">add</span>
+<span class="absolute right-16 bg-inverse-surface text-inverse-on-surface px-3 py-1 rounded text-caption whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Aggiungi Nota Personale</span>
+</button>
+</div>
+<!-- Interaction Script -->
+<script>
+        // Simple waveform animation mock
+        const bars = document.querySelectorAll('.waveform-bar');
+        setInterval(() => {
+            bars.forEach(bar => {
+                const height = Math.floor(Math.random() * 40) + 10;
+                bar.style.height = `${height}px`;
+            });
+        }, 150);
+
+        // Click interaction for transcription rows
+        document.querySelectorAll('.cursor-pointer').forEach(row => {
+            row.addEventListener('click', function() {
+                // Reset all
+                document.querySelectorAll('.cursor-pointer').forEach(r => {
+                    r.classList.remove('bg-primary/5', 'border-primary/20', 'border-l-4');
+                    r.querySelector('.text-primary')?.classList.replace('text-primary', 'text-secondary');
+                });
+                
+                // Set active
+                this.classList.add('bg-primary/5', 'border-primary/20', 'border-l-4', 'border-l-primary');
+                const time = this.querySelector('.text-caption');
+                if(time) time.classList.replace('text-secondary', 'text-primary');
+            });
+        });
+    </script>
+</body></html>
